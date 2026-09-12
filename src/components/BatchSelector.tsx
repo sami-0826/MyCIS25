@@ -206,16 +206,6 @@ export const BatchSelector: React.FC<BatchSelectorProps> = ({
           {selectedBatch}2 (lab group)
         </button>
       </div>
-
-      {/* Reassurance note for students */}
-      {pinnedBatch && (
-        <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-zinc-400 pt-0.5">
-          <Bookmark className="w-3 h-3 text-amber-500 fill-current shrink-0" />
-          <span>
-            Opening default: <strong className="text-slate-800 dark:text-zinc-200 font-semibold">Batch {pinnedBatch}</strong>. Next time you enter, you will land directly on your section.
-          </span>
-        </div>
-      )}
     </div>
   );
 };
