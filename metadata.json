@@ -1,0 +1,8 @@
+{
+  "name": "MyCIS 25",
+  "description": "Minimal and clean class routine and schedule manager for CIS Batch-25.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
