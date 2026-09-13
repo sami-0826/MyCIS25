@@ -408,9 +408,8 @@ export default function App() {
         </section>
 
         {/* 6. Clean Minimal Footer */}
-        <footer className="pt-8 pb-4 text-center space-y-1 text-xs text-slate-500 dark:text-zinc-500">
+        <footer className="pt-8 pb-4 text-center text-xs text-slate-500 dark:text-zinc-500">
           <p>Built for CIS Batch-25</p>
-          <p className="text-slate-400 dark:text-zinc-600">Made by LazyKing</p>
         </footer>
       </main>
 
