@@ -18,6 +18,7 @@ import { TeacherSection } from './components/TeacherSection';
 import { CourseDetailModal } from './components/CourseDetailModal';
 import { NotificationModal } from './components/NotificationModal';
 import { ClassAlertBanner, ActiveClassAlert } from './components/ClassAlertBanner';
+import { UserGuideModal } from './components/UserGuideModal';
 import {
   loadNotificationSettings,
   saveNotificationSettings,
@@ -30,7 +31,7 @@ import {
 } from './utils/notificationUtils';
 import { timeStringToMinutes, formatTo12Hour } from './utils/timeUtils';
 import { getBatchTheme } from './utils/themeUtils';
-import { Users, ArrowRight, Bookmark, Mail } from 'lucide-react';
+import { Users, ArrowRight, Bookmark, Mail, BookOpen } from 'lucide-react';
 
 export default function App() {
   // 1. Persistent Dark Mode
@@ -122,6 +123,7 @@ export default function App() {
     loadNotificationSettings()
   );
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const [isUserGuideOpen, setIsUserGuideOpen] = useState(false);
   const [activeClassAlert, setActiveClassAlert] = useState<ActiveClassAlert | null>(null);
 
   const handleUpdateNotificationSettings = (newSettings: NotificationSettings) => {
@@ -367,6 +369,7 @@ export default function App() {
         isPinned={pinnedBatch === selectedBatch}
         notificationsEnabled={notificationSettings.enabled}
         onOpenNotifications={() => setIsNotificationModalOpen(true)}
+        onOpenGuide={() => setIsUserGuideOpen(true)}
       />
 
       {/* 15-Minute Advance Class In-App Floating Alert */}
@@ -529,6 +532,15 @@ export default function App() {
               <Mail className="w-3 h-3" />
               <span>Send Feedback</span>
             </a>
+            <span className="text-slate-300 dark:text-zinc-700">&bull;</span>
+            <button
+              id="footer-guide-button"
+              onClick={() => setIsUserGuideOpen(true)}
+              className="inline-flex items-center gap-1 font-medium text-slate-700 dark:text-zinc-300 underline underline-offset-4 decoration-slate-300 dark:decoration-zinc-700 hover:text-indigo-600 dark:hover:text-indigo-400 hover:decoration-indigo-400 transition-colors cursor-pointer"
+            >
+              <BookOpen className="w-3 h-3" />
+              <span>User Guide & Features</span>
+            </button>
           </div>
         </footer>
       </main>
@@ -566,6 +578,14 @@ export default function App() {
         onUpdateSettings={handleUpdateNotificationSettings}
         selectedBatch={selectedBatch}
         onTriggerTestInApp={handleTriggerTestAlert}
+      />
+
+      {/* User Guide & Feature Manual Modal */}
+      <UserGuideModal
+        isOpen={isUserGuideOpen}
+        onClose={() => setIsUserGuideOpen(false)}
+        selectedBatch={selectedBatch}
+        onOpenNotifications={() => setIsNotificationModalOpen(true)}
       />
     </div>
   );

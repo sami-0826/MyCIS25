@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GraduationCap, Sun, Moon, Bookmark, RotateCcw, Bell, BellOff } from 'lucide-react';
+import { GraduationCap, Sun, Moon, Bookmark, RotateCcw, Bell, BellOff, BookOpen } from 'lucide-react';
 import { BatchId } from '../types';
 import { getBatchTheme } from '../utils/themeUtils';
 
@@ -10,6 +10,7 @@ interface HeaderProps {
   isPinned?: boolean;
   notificationsEnabled?: boolean;
   onOpenNotifications?: () => void;
+  onOpenGuide?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -19,6 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
   isPinned = false,
   notificationsEnabled = false,
   onOpenNotifications,
+  onOpenGuide,
 }) => {
   const theme = getBatchTheme(selectedBatch);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -68,8 +70,19 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Right: Actions (Notifications, Reload & Theme Toggle) */}
+        {/* Right: Actions (Guide, Notifications, Reload & Theme Toggle) */}
         <div className="flex items-center gap-2">
+          {/* Feature Guide & Best Ways to Use Button */}
+          <button
+            id="btn-header-guide"
+            onClick={onOpenGuide}
+            title="User Guide & Features (Best ways to use MyCIS 25)"
+            aria-label="User Guide and Features"
+            className="p-2 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer border border-slate-200 dark:border-zinc-800 flex items-center justify-center group"
+          >
+            <BookOpen className="w-4 h-4 text-slate-600 dark:text-zinc-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:scale-110 transition-transform" />
+          </button>
+
           {/* Class Notifications Button */}
           <button
             id="btn-header-notifications"
