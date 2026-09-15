@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { GraduationCap, Sun, Moon, Bookmark, RotateCcw, Bell, BellOff } from 'lucide-react';
 import { BatchId } from '../types';
 import { getBatchTheme } from '../utils/themeUtils';
-import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   darkMode: boolean;
@@ -69,11 +68,8 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Right: Actions (Install, Notifications, Reload & Theme Toggle) */}
+        {/* Right: Actions (Notifications, Reload & Theme Toggle) */}
         <div className="flex items-center gap-2">
-          {/* PWA Install Button */}
-          <PWAInstallButton />
-
           {/* Class Notifications Button */}
           <button
             id="btn-header-notifications"
