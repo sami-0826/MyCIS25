@@ -16,8 +16,21 @@ import { DayView } from './components/DayView';
 import { WeeklyGrid } from './components/WeeklyGrid';
 import { TeacherSection } from './components/TeacherSection';
 import { CourseDetailModal } from './components/CourseDetailModal';
+import { NotificationModal } from './components/NotificationModal';
+import { ClassAlertBanner, ActiveClassAlert } from './components/ClassAlertBanner';
+import {
+  loadNotificationSettings,
+  saveNotificationSettings,
+  NotificationSettings,
+  shouldClassTriggerNotification,
+  getNotifiedClassIdsToday,
+  markClassNotifiedToday,
+  playNotificationChime,
+  sendBrowserNotification,
+} from './utils/notificationUtils';
+import { timeStringToMinutes, formatTo12Hour } from './utils/timeUtils';
 import { getBatchTheme } from './utils/themeUtils';
-import { Users, ArrowRight, Bookmark } from 'lucide-react';
+import { Users, ArrowRight, Bookmark, Mail } from 'lucide-react';
 
 export default function App() {
   // 1. Persistent Dark Mode
@@ -104,6 +117,18 @@ export default function App() {
   // Course Guide & Details Modal
   const [activeCourseModal, setActiveCourseModal] = useState<string | null>(null);
 
+  // Notification Settings, Active In-App Alert, and Modal
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>(() =>
+    loadNotificationSettings()
+  );
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const [activeClassAlert, setActiveClassAlert] = useState<ActiveClassAlert | null>(null);
+
+  const handleUpdateNotificationSettings = (newSettings: NotificationSettings) => {
+    setNotificationSettings(newSettings);
+    saveNotificationSettings(newSettings);
+  };
+
   // Toast feedback for pinning
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -112,6 +137,15 @@ export default function App() {
     const timer = setTimeout(() => setToastMessage(null), 3500);
     return () => clearTimeout(timer);
   }, [toastMessage]);
+
+  // Auto-dismiss in-app class alert after 15 seconds
+  useEffect(() => {
+    if (!activeClassAlert) return;
+    const timer = setTimeout(() => {
+      setActiveClassAlert(null);
+    }, 15000);
+    return () => clearTimeout(timer);
+  }, [activeClassAlert]);
 
   const handleSelectBatch = (batch: BatchId) => {
     setSelectedBatch(batch);
@@ -198,6 +232,72 @@ export default function App() {
     return computeLiveStatus(batchSectionClasses, currentTime);
   }, [batchSectionClasses, currentTime]);
 
+  // 15-Minute Advance Smart Notification Watcher
+  // Rule:
+  // - Sends notification 15 minutes before class starts.
+  // - Only for first class of the day, or when there was NO class right before it (after a free break/gap).
+  // - Will NOT send if there is a class running right before it (back-to-back classes).
+  useEffect(() => {
+    if (!notificationSettings.enabled) return;
+
+    const todayClasses = batchSectionClasses
+      .filter((c) => c.day === todayDayOfWeek)
+      .sort((a, b) => timeStringToMinutes(a.startTime) - timeStringToMinutes(b.startTime));
+
+    if (todayClasses.length === 0) return;
+
+    const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+    const notifiedIds = getNotifiedClassIdsToday(currentTime);
+
+    for (let i = 0; i < todayClasses.length; i++) {
+      const session = todayClasses[i];
+
+      // Check smart rule criteria: first class of day OR after a free break
+      if (!shouldClassTriggerNotification(session, todayClasses)) {
+        continue;
+      }
+
+      // Check if already notified today
+      if (notifiedIds.has(session.id)) {
+        continue;
+      }
+
+      const startMinutes = timeStringToMinutes(session.startTime);
+      const diff = startMinutes - currentMinutes;
+
+      // When remaining time is within 15 minutes (between 1 and 15 mins inclusive)
+      if (diff > 0 && diff <= 15) {
+        markClassNotifiedToday(session.id, currentTime);
+
+        if (notificationSettings.sound) {
+          playNotificationChime();
+        }
+
+        sendBrowserNotification(`🔔 Class in ${diff}m: ${session.courseCode}`, {
+          body: `${session.courseName} starts at ${formatTo12Hour(session.startTime)} in ${session.room} (${session.teacherName}).`,
+        });
+
+        setActiveClassAlert({
+          classSession: session,
+          minutesUntilStart: diff,
+          isFirstClassOfDay: i === 0,
+        });
+
+        break; // Process one alert per cycle
+      }
+    }
+  }, [currentTime, batchSectionClasses, todayDayOfWeek, notificationSettings]);
+
+  const handleTriggerTestAlert = () => {
+    const testClass = batchSectionClasses[0] || schedule[0];
+    setActiveClassAlert({
+      classSession: testClass,
+      minutesUntilStart: 15,
+      isFirstClassOfDay: true,
+      isTest: true,
+    });
+  };
+
   const isSearchActive =
     searchQuery.trim().length > 0 || activeFilterTeacher !== null || activeFilterCourse !== null;
 
@@ -265,6 +365,15 @@ export default function App() {
         onToggleDarkMode={() => setDarkMode((prev) => !prev)}
         selectedBatch={selectedBatch}
         isPinned={pinnedBatch === selectedBatch}
+        notificationsEnabled={notificationSettings.enabled}
+        onOpenNotifications={() => setIsNotificationModalOpen(true)}
+      />
+
+      {/* 15-Minute Advance Class In-App Floating Alert */}
+      <ClassAlertBanner
+        alert={activeClassAlert}
+        onDismiss={() => setActiveClassAlert(null)}
+        onSelectCourse={(courseCode) => setActiveCourseModal(courseCode)}
       />
 
       {/* Main Centered Content */}
@@ -408,8 +517,19 @@ export default function App() {
         </section>
 
         {/* 6. Clean Minimal Footer */}
-        <footer className="pt-8 pb-4 text-center text-xs text-slate-500 dark:text-zinc-500">
+        <footer className="pt-8 pb-6 text-center space-y-2 text-xs text-slate-500 dark:text-zinc-500">
           <p>Built for CIS Batch-25</p>
+          <div className="flex items-center justify-center gap-1.5 text-slate-500 dark:text-zinc-400">
+            <span>Suggestions or fixes?</span>
+            <a
+              id="footer-feedback-link"
+              href="mailto:samiulanowarofficial@gmail.com?subject=MyCIS%20Routine%20Feedback%20%2F%20Fixes"
+              className="inline-flex items-center gap-1 font-medium text-slate-700 dark:text-zinc-300 underline underline-offset-4 decoration-slate-300 dark:decoration-zinc-700 hover:text-indigo-600 dark:hover:text-indigo-400 hover:decoration-indigo-400 transition-colors"
+            >
+              <Mail className="w-3 h-3" />
+              <span>Send Feedback</span>
+            </a>
+          </div>
         </footer>
       </main>
 
@@ -437,6 +557,16 @@ export default function App() {
           selectedBatch={selectedBatch}
         />
       )}
+
+      {/* Notification Settings Modal */}
+      <NotificationModal
+        isOpen={isNotificationModalOpen}
+        onClose={() => setIsNotificationModalOpen(false)}
+        settings={notificationSettings}
+        onUpdateSettings={handleUpdateNotificationSettings}
+        selectedBatch={selectedBatch}
+        onTriggerTestInApp={handleTriggerTestAlert}
+      />
     </div>
   );
 }

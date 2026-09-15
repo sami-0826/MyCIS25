@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { GraduationCap, Sun, Moon, Bookmark } from 'lucide-react';
+import { GraduationCap, Sun, Moon, Bookmark, RotateCcw, Bell, BellOff } from 'lucide-react';
 import { BatchId } from '../types';
 import { getBatchTheme } from '../utils/themeUtils';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   darkMode: boolean;
   onToggleDarkMode: () => void;
   selectedBatch: BatchId;
   isPinned?: boolean;
+  notificationsEnabled?: boolean;
+  onOpenNotifications?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -15,6 +18,8 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleDarkMode,
   selectedBatch,
   isPinned = false,
+  notificationsEnabled = false,
+  onOpenNotifications,
 }) => {
   const theme = getBatchTheme(selectedBatch);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,14 +69,47 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Right: Theme Toggle */}
+        {/* Right: Actions (Install, Notifications, Reload & Theme Toggle) */}
         <div className="flex items-center gap-2">
+          {/* PWA Install Button */}
+          <PWAInstallButton />
+
+          {/* Class Notifications Button */}
+          <button
+            id="btn-header-notifications"
+            onClick={onOpenNotifications}
+            title={notificationsEnabled ? 'Class notifications active (15m before class)' : 'Configure class notifications'}
+            aria-label="Class notifications settings"
+            className="relative p-2 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer border border-slate-200 dark:border-zinc-800 flex items-center justify-center group"
+          >
+            {notificationsEnabled ? (
+              <>
+                <Bell className="w-4 h-4 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform" />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-zinc-900" />
+              </>
+            ) : (
+              <BellOff className="w-4 h-4 text-slate-400 dark:text-zinc-500 group-hover:text-slate-600 dark:group-hover:text-zinc-300 transition-colors" />
+            )}
+          </button>
+
+          {/* Reload Page Button */}
+          <button
+            id="btn-reload-header"
+            onClick={() => window.location.reload()}
+            title="Reload schedule"
+            aria-label="Reload schedule"
+            className="p-2 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer border border-slate-200 dark:border-zinc-800 flex items-center justify-center group"
+          >
+            <RotateCcw className="w-4 h-4 text-slate-600 dark:text-zinc-300 group-hover:rotate-180 transition-transform duration-500" />
+          </button>
+
           {/* Dark / Light Mode Toggle */}
           <button
             id="btn-theme-toggle"
             onClick={onToggleDarkMode}
             title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            className="p-2 rounded-xl text-slate-600 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer border border-slate-200 dark:border-zinc-800"
+            aria-label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            className="p-2 rounded-xl text-slate-600 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer border border-slate-200 dark:border-zinc-800 flex items-center justify-center"
           >
             {darkMode ? (
               <Sun className="w-4 h-4 text-amber-400" />
