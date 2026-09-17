@@ -20,6 +20,9 @@ import {
   FileDown,
   Layers,
   HelpCircle,
+  Download,
+  Laptop,
+  WifiOff,
 } from 'lucide-react';
 import { BatchId } from '../types';
 
@@ -30,7 +33,7 @@ interface UserGuideModalProps {
   onOpenNotifications: () => void;
 }
 
-type GuideSection = 'best-way' | 'all-features' | 'tips' | 'faq';
+type GuideSection = 'best-way' | 'install' | 'all-features' | 'tips' | 'faq';
 
 export const UserGuideModal: React.FC<UserGuideModalProps> = ({
   isOpen,
@@ -44,6 +47,15 @@ export const UserGuideModal: React.FC<UserGuideModalProps> = ({
   if (!isOpen) return null;
 
   const features = [
+    {
+      id: 'pwa-install',
+      title: 'Install App (PWA) & Offline Routine Access',
+      category: 'Installation',
+      icon: Download,
+      color: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
+      description:
+        'Install MyCIS 25 directly onto your phone or computer. Launches fullscreen with zero browser address bar clutter and full offline availability.',
+    },
     {
       id: 'realtime-status',
       title: 'Live Class Status & Next Class Countdown',
@@ -148,6 +160,10 @@ export const UserGuideModal: React.FC<UserGuideModalProps> = ({
 
   const faqs = [
     {
+      q: 'How do I install MyCIS 25 on my phone or PC as an app?',
+      a: 'Click the "📲 Install App" button at the top right of the header if available, or use your browser menu: on iPhone/iPad Safari tap Share → "Add to Home Screen"; on Android or PC Chrome/Edge tap Menu (⋮) → "Install app". Once added, it launches in standalone fullscreen and works offline.',
+    },
+    {
       q: 'How does MyCIS 25 know which class is happening right now?',
       a: 'The system computes current time and day dynamically based on local clock and university class timings, updating every second to reflect active periods and upcoming countdowns.',
     },
@@ -220,6 +236,18 @@ export const UserGuideModal: React.FC<UserGuideModalProps> = ({
           </button>
 
           <button
+            onClick={() => setActiveSection('install')}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+              activeSection === 'install'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800'
+            }`}
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Install App (PWA)</span>
+          </button>
+
+          <button
             onClick={() => setActiveSection('all-features')}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
               activeSection === 'all-features'
@@ -258,6 +286,157 @@ export const UserGuideModal: React.FC<UserGuideModalProps> = ({
 
         {/* Scrollable Content Area */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          {/* SECTION: INSTALL APP (PWA) */}
+          {activeSection === 'install' && (
+            <div className="space-y-6">
+              {/* Highlight Banner */}
+              <div className="p-4 rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-xl bg-indigo-600 text-white shrink-0 mt-0.5 sm:mt-0">
+                    <Download className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-indigo-950 dark:text-indigo-200">
+                      Install MyCIS 25 on Your Device
+                    </h3>
+                    <p className="text-xs text-indigo-700 dark:text-indigo-300">
+                      Installs like a native mobile or desktop app: zero app store hassle, fullscreen view, and works offline even when campus Wi-Fi disconnects.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    onClose();
+                    const btn = document.getElementById('installBtn');
+                    if (btn && btn.style.display !== 'none') {
+                      btn.click();
+                    }
+                  }}
+                  className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-colors cursor-pointer shrink-0 shadow-sm flex items-center gap-1.5"
+                >
+                  <span>📲 Try Header Install</span>
+                </button>
+              </div>
+
+              {/* Platform Guides Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Android Guide */}
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-200/80 dark:border-zinc-800 hover:border-indigo-300 dark:hover:border-indigo-700/50 transition-all flex flex-col justify-between space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[11px] font-extrabold px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+                        ANDROID
+                      </span>
+                      <Smartphone className="w-4 h-4 text-emerald-500" />
+                    </div>
+                    <h4 className="text-sm font-bold mb-2 text-slate-900 dark:text-white">
+                      Chrome, Edge & Samsung
+                    </h4>
+                    <ol className="text-xs text-slate-600 dark:text-zinc-400 space-y-2 list-decimal list-inside leading-relaxed">
+                      <li>
+                        Tap the <strong>📲 Install App</strong> button in the top header.
+                      </li>
+                      <li>
+                        Or tap browser menu <strong>(⋮ three dots)</strong> in the top right.
+                      </li>
+                      <li>
+                        Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.
+                      </li>
+                      <li>
+                        Tap <strong>Install</strong>. MyCIS 25 will now sit on your home screen and app drawer!
+                      </li>
+                    </ol>
+                  </div>
+                  <div className="pt-3 border-t border-slate-200/60 dark:border-zinc-700/60 text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Launches in standalone fullscreen</span>
+                  </div>
+                </div>
+
+                {/* iOS iPhone / iPad Guide */}
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-200/80 dark:border-zinc-800 hover:border-indigo-300 dark:hover:border-indigo-700/50 transition-all flex flex-col justify-between space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[11px] font-extrabold px-2.5 py-1 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300">
+                        APPLE IOS
+                      </span>
+                      <Smartphone className="w-4 h-4 text-blue-500" />
+                    </div>
+                    <h4 className="text-sm font-bold mb-2 text-slate-900 dark:text-white">
+                      iPhone & iPad (Safari)
+                    </h4>
+                    <ol className="text-xs text-slate-600 dark:text-zinc-400 space-y-2 list-decimal list-inside leading-relaxed">
+                      <li>
+                        Open <strong>MyCIS 25</strong> in Apple Safari.
+                      </li>
+                      <li>
+                        Tap the <strong>Share</strong> button (box with an upward arrow) at the bottom toolbar.
+                      </li>
+                      <li>
+                        Scroll down and select <strong>"Add to Home Screen"</strong>.
+                      </li>
+                      <li>
+                        Tap <strong>Add</strong> in the top-right corner. It opens like a native iOS app without Safari navigation bars!
+                      </li>
+                    </ol>
+                  </div>
+                  <div className="pt-3 border-t border-slate-200/60 dark:border-zinc-700/60 text-[11px] text-blue-600 dark:text-blue-400 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Zero browser address bars</span>
+                  </div>
+                </div>
+
+                {/* PC / Laptop Guide */}
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-200/80 dark:border-zinc-800 hover:border-indigo-300 dark:hover:border-indigo-700/50 transition-all flex flex-col justify-between space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[11px] font-extrabold px-2.5 py-1 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
+                        DESKTOP & LAPTOP
+                      </span>
+                      <Laptop className="w-4 h-4 text-purple-500" />
+                    </div>
+                    <h4 className="text-sm font-bold mb-2 text-slate-900 dark:text-white">
+                      Windows, Mac & Linux
+                    </h4>
+                    <ol className="text-xs text-slate-600 dark:text-zinc-400 space-y-2 list-decimal list-inside leading-relaxed">
+                      <li>
+                        In Chrome, Edge, or Brave, click the <strong>📲 Install App</strong> header button.
+                      </li>
+                      <li>
+                        Or click the <strong>Install</strong> computer icon located on the right side of the address bar.
+                      </li>
+                      <li>
+                        Confirm <strong>Install</strong>.
+                      </li>
+                      <li>
+                        Pin it to your Windows Taskbar or macOS Dock for 1-click routine access during study sessions.
+                      </li>
+                    </ol>
+                  </div>
+                  <div className="pt-3 border-t border-slate-200/60 dark:border-zinc-700/60 text-[11px] text-purple-600 dark:text-purple-400 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Runs in standalone desktop window</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Offline Capability Info Card */}
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-800/40 border border-slate-200/70 dark:border-zinc-800 flex items-start gap-3.5">
+                <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 shrink-0 mt-0.5">
+                  <WifiOff className="w-4 h-4" />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white">
+                    Offline Routine Capability
+                  </h4>
+                  <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
+                    MyCIS 25 features an automated background Service Worker. Once loaded or installed, your batch routine, schedules, teacher contacts, and course syllabus are cached locally. You can view classrooms, times, and details anywhere on campus even with airplane mode or no cellular data!
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* SECTION 1: BEST WAY TO USE */}
           {activeSection === 'best-way' && (
             <div className="space-y-6">
