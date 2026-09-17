@@ -187,7 +187,7 @@ export function computeLiveStatus(
 }
 
 // LocalStorage helpers
-const STORAGE_KEY = 'cis_batch_25_routine_fall2026_v1';
+const STORAGE_KEY = 'cis_batch_25_routine_fall2026_v2';
 
 export function loadStoredSchedule(): ClassSession[] | null {
   try {

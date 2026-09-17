@@ -23,7 +23,7 @@ export const COURSE_DEFINITIONS: Record<string, CourseDefinition> = {
     creditHours: '3.0 Credits',
     description: 'Structure and operational behavior of computing systems, CPU instruction sets, ALU design, memory hierarchy, cache organization, bus architecture, and input/output interfaces.',
     topics: ['Von Neumann Architecture', 'Instruction Set Architecture (ISA)', 'Memory Hierarchy & Cache', 'Pipelining & ALU', 'Buses & System Interconnects'],
-    instructors: ['DMSU', 'MSH', 'TBA1'],
+    instructors: ['DMSU', 'RHN', 'MSH'],
   },
   'DS': {
     code: 'DS',
@@ -53,7 +53,7 @@ export const COURSE_DEFINITIONS: Record<string, CourseDefinition> = {
     creditHours: '3.0 Credits',
     description: 'Differential and integral calculus essential for computer science: limits, continuity, derivative techniques, integration theorems, and coordinate geometry analysis.',
     topics: ['Differential Calculus', 'Integral Calculus', 'Limits & Continuity', 'Coordinate Geometry', 'Practical Applications in Computing'],
-    instructors: ['TBA'],
+    instructors: ['MMDH'],
   },
   'English II': {
     code: 'English II',

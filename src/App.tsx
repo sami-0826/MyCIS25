@@ -521,7 +521,7 @@ export default function App() {
 
         {/* 6. Clean Minimal Footer */}
         <footer className="pt-8 pb-6 text-center space-y-2 text-xs text-slate-500 dark:text-zinc-500">
-          <p>Built for CIS Batch-25</p>
+          <p>Built for CIS Batch-25 &bull; Fall-2026 (Version 02, Effective 19 Sep 2026)</p>
           <div className="flex items-center justify-center gap-1.5 text-slate-500 dark:text-zinc-400">
             <span>Suggestions or fixes?</span>
             <a

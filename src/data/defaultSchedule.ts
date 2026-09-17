@@ -1,10 +1,27 @@
 import { ClassSession, TeacherInfo, DayOfWeek } from '../types';
 
+export const ROUTINE_METADATA = {
+  department: 'Department of Computing & Information System (CIS)',
+  university: 'Daffodil International University',
+  campus: 'Daffodil Smart City, Birulia Savar, Dhaka-1216',
+  semester: 'Fall-2026',
+  version: 'Version: 02 (Update)',
+  effectiveDate: '19th September 2026',
+  preparedBy: 'Sonia Nasrin & Tamanna Akter',
+};
+
 export const TEACHERS: TeacherInfo[] = [
+  // Primary Faculty for Batch 25
   {
     initial: 'MH',
     fullName: 'Md. Mehedi Hassan',
     designation: 'Assistant Professor, Department of CIS',
+    courses: ['Data Structures (DS)', 'Data Structures Lab (DS Lab)'],
+  },
+  {
+    initial: 'IS',
+    fullName: 'Mr. Israfil',
+    designation: 'Lecturer, Department of CIS',
     courses: ['Data Structures (DS)', 'Data Structures Lab (DS Lab)'],
   },
   {
@@ -14,16 +31,22 @@ export const TEACHERS: TeacherInfo[] = [
     courses: ['English Language II (English II)'],
   },
   {
+    initial: 'MMDH',
+    fullName: 'Mohammad Mahmud Hasan',
+    designation: 'Faculty Member, Department of Mathematics',
+    courses: ['Mathematics I (Math I)'],
+  },
+  {
     initial: 'DMSU',
     fullName: 'Dr. Muhammad Shahin Uddin',
     designation: 'Associate Professor, Department of CIS',
     courses: ['Computer Architecture & Organization (CAO)'],
   },
   {
-    initial: 'IS',
-    fullName: 'Mr. Israfil',
+    initial: 'RHN',
+    fullName: 'Rakibul Hasan Nirob',
     designation: 'Lecturer, Department of CIS',
-    courses: ['Data Structures (DS)', 'Data Structures Lab (DS Lab)'],
+    courses: ['Computer Architecture & Organization (CAO)'],
   },
   {
     initial: 'MSH',
@@ -31,24 +54,98 @@ export const TEACHERS: TeacherInfo[] = [
     designation: 'Assistant Professor, Department of CIS',
     courses: ['Computer Architecture & Organization (CAO)'],
   },
+  // Department Faculty Directory (from Official CIS Fall-2026 Version: 02 Routine)
   {
-    initial: 'TBA',
-    fullName: 'To Be Assigned',
-    designation: 'Faculty Member, Department of Mathematics',
-    courses: ['Mathematics I (Math I)'],
+    initial: 'SHM',
+    fullName: 'Md. Sarwar Hossain Mollah',
+    designation: 'Assistant Professor, Department of CIS',
+    courses: ['Computing Fundamentals', 'Computer Networks'],
   },
   {
-    initial: 'TBA1',
-    fullName: 'To Be Assigned (TBA 1)',
-    designation: 'Faculty Member, Department of CIS',
-    courses: ['Computer Architecture & Organization (CAO)'],
+    initial: 'DFAH',
+    fullName: 'Prof. Dr. Engr. Md. Faruque Ahmed Haolader',
+    designation: 'Professor, Department of CIS',
+    courses: ['Structured Programming', 'Data Visualization'],
+  },
+  {
+    initial: 'DMR',
+    fullName: 'Dr. Md Mizanur Rahoman',
+    designation: 'Associate Professor, Department of CIS',
+    courses: ['Big Data Analytics & Applications (BDAA)'],
+  },
+  {
+    initial: 'DMAK',
+    fullName: 'DR. MOHAMMAD AZAM KHAN',
+    designation: 'Associate Professor, Department of CIS',
+    courses: ['Artificial Intelligence (AI)'],
+  },
+  {
+    initial: 'TS',
+    fullName: 'Tanjida Supta',
+    designation: 'Lecturer, Department of CIS',
+    courses: ['Statistics & Probability', 'Economics'],
+  },
+  {
+    initial: 'NKS',
+    fullName: 'Md. Nasimul Kader',
+    designation: 'Assistant Professor, Department of CIS',
+    courses: ['Object-Oriented Programming (OOP)'],
+  },
+  {
+    initial: 'MJH',
+    fullName: 'Md. Jahangir Hossain',
+    designation: 'Assistant Professor, Department of CIS',
+    courses: ['Introduction to Business Communication (IBC)'],
+  },
+  {
+    initial: 'SJS',
+    fullName: 'Sifat Jahan Shorna',
+    designation: 'Lecturer, Department of CIS',
+    courses: ['Software Engineering (SE)', 'Web Development (WDE)'],
+  },
+  {
+    initial: 'MAA',
+    fullName: 'Md. Alauddin Azad',
+    designation: 'Assistant Professor, Department of CIS',
+    courses: ['Business Analysis (BA)'],
+  },
+  {
+    initial: 'ABKB',
+    fullName: 'Abdullah Bin Kasem Bhuiyan',
+    designation: 'Lecturer, Department of CIS',
+    courses: ['Software Quality Assurance & Testing (SQAT)', 'Information System Engineering (ISE)'],
+  },
+  {
+    initial: 'SN',
+    fullName: 'Sonia Nasrin',
+    designation: 'Assistant Professor, Department of CIS',
+    courses: ['Operating Systems (OS)', 'Discrete Mathematics (DM)'],
+  },
+  {
+    initial: 'JFA',
+    fullName: 'Jannatul Ferdous Ankhi',
+    designation: 'Lecturer, Faculty of Business & Entrepreneurship',
+    courses: ['Financial Accounting', 'Finance'],
+  },
+  {
+    initial: 'MMH',
+    fullName: 'Md. Moniruzzaman Hemal',
+    designation: 'Assistant Professor, Department of CIS',
+    courses: ['Internet of Things (IoT) & Embedded Systems'],
+  },
+  {
+    initial: 'MAMR',
+    fullName: 'Md. Asif Mahmud Ridoy',
+    designation: 'Lecturer, Department of CIS',
+    courses: ['Art of Living (AoL)', 'Intro to Industry 4.0'],
   },
 ];
 
 export const INITIAL_SCHEDULE: ClassSession[] = [
-  // ==========================================
+  // =========================================================================
   // BATCH 25A
-  // ==========================================
+  // Schedule: Sunday, Monday, Wednesday, Thursday
+  // =========================================================================
 
   // Sunday
   {
@@ -58,8 +155,8 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     courseCode: 'Math I',
     courseName: 'Mathematics I',
     type: 'Theory',
-    teacherName: 'To Be Assigned',
-    teacherInitial: 'TBA',
+    teacherName: 'Mohammad Mahmud Hasan',
+    teacherInitial: 'MMDH',
     room: 'Room 704',
     day: 'Sunday',
     startTime: '08:30',
@@ -75,7 +172,7 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     type: 'Lab',
     teacherName: 'Md. Mehedi Hassan',
     teacherInitial: 'MH',
-    room: 'G25 Lab',
+    room: 'G25 LAB',
     day: 'Sunday',
     startTime: '11:30',
     endTime: '13:00',
@@ -90,7 +187,7 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     type: 'Lab',
     teacherName: 'Md. Mehedi Hassan',
     teacherInitial: 'MH',
-    room: 'G25 Lab',
+    room: 'G25 LAB',
     day: 'Sunday',
     startTime: '13:00',
     endTime: '14:30',
@@ -125,6 +222,7 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     day: 'Monday',
     startTime: '10:00',
     endTime: '11:30',
+    notes: 'Theory class in 615 Lab',
   },
   {
     id: '25A-mon-3',
@@ -133,12 +231,12 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     courseCode: 'Math I',
     courseName: 'Mathematics I',
     type: 'Theory',
-    teacherName: 'To Be Assigned',
-    teacherInitial: 'TBA',
+    teacherName: 'Mohammad Mahmud Hasan',
+    teacherInitial: 'MMDH',
     room: 'Room 704',
     day: 'Monday',
-    startTime: '13:00',
-    endTime: '14:30',
+    startTime: '11:30',
+    endTime: '13:00',
   },
 
   // Wednesday
@@ -169,6 +267,7 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     day: 'Wednesday',
     startTime: '10:00',
     endTime: '11:30',
+    notes: 'Theory class in 615 Lab',
   },
 
   // Thursday
@@ -201,9 +300,40 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     endTime: '11:30',
   },
 
-  // ==========================================
+  // =========================================================================
   // BATCH 25B
-  // ==========================================
+  // Schedule: Monday, Tuesday, Wednesday, Thursday
+  // =========================================================================
+
+  // Monday
+  {
+    id: '25B-mon-1',
+    batch: '25B',
+    subSection: 'All',
+    courseCode: 'DS',
+    courseName: 'Data Structures (Theory)',
+    type: 'Theory',
+    teacherName: 'Md. Mehedi Hassan',
+    teacherInitial: 'MH',
+    room: 'Room 703',
+    day: 'Monday',
+    startTime: '14:30',
+    endTime: '16:00',
+  },
+  {
+    id: '25B-mon-2',
+    batch: '25B',
+    subSection: 'All',
+    courseCode: 'CAO',
+    courseName: 'Computer Architecture & Organization',
+    type: 'Theory',
+    teacherName: 'Rakibul Hasan Nirob',
+    teacherInitial: 'RHN',
+    room: 'Room 703',
+    day: 'Monday',
+    startTime: '16:00',
+    endTime: '17:30',
+  },
 
   // Tuesday
   {
@@ -257,8 +387,8 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     courseCode: 'Math I',
     courseName: 'Mathematics I',
     type: 'Theory',
-    teacherName: 'To Be Assigned',
-    teacherInitial: 'TBA',
+    teacherName: 'Mohammad Mahmud Hasan',
+    teacherInitial: 'MMDH',
     room: 'Room 703',
     day: 'Tuesday',
     startTime: '13:00',
@@ -273,8 +403,8 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     courseCode: 'CAO',
     courseName: 'Computer Architecture & Organization',
     type: 'Theory',
-    teacherName: 'To Be Assigned (TBA 1)',
-    teacherInitial: 'TBA1',
+    teacherName: 'Rakibul Hasan Nirob',
+    teacherInitial: 'RHN',
     room: 'Room 704',
     day: 'Wednesday',
     startTime: '08:30',
@@ -284,20 +414,6 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     id: '25B-wed-2',
     batch: '25B',
     subSection: 'All',
-    courseCode: 'DS',
-    courseName: 'Data Structures (Theory)',
-    type: 'Theory',
-    teacherName: 'Md. Mehedi Hassan',
-    teacherInitial: 'MH',
-    room: 'Room 704',
-    day: 'Wednesday',
-    startTime: '11:30',
-    endTime: '13:00',
-  },
-  {
-    id: '25B-wed-3',
-    batch: '25B',
-    subSection: 'All',
     courseCode: 'English II',
     courseName: 'English Language II',
     type: 'Theory',
@@ -305,8 +421,8 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     teacherInitial: 'TA',
     room: 'Room 704',
     day: 'Wednesday',
-    startTime: '13:00',
-    endTime: '14:30',
+    startTime: '11:30',
+    endTime: '13:00',
   },
 
   // Thursday
@@ -317,8 +433,8 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     courseCode: 'Math I',
     courseName: 'Mathematics I',
     type: 'Theory',
-    teacherName: 'To Be Assigned',
-    teacherInitial: 'TBA',
+    teacherName: 'Mohammad Mahmud Hasan',
+    teacherInitial: 'MMDH',
     room: 'Room 702',
     day: 'Thursday',
     startTime: '08:30',
@@ -328,20 +444,6 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     id: '25B-thu-2',
     batch: '25B',
     subSection: 'All',
-    courseCode: 'CAO',
-    courseName: 'Computer Architecture & Organization',
-    type: 'Theory',
-    teacherName: 'To Be Assigned (TBA 1)',
-    teacherInitial: 'TBA1',
-    room: 'Room 702',
-    day: 'Thursday',
-    startTime: '10:00',
-    endTime: '11:30',
-  },
-  {
-    id: '25B-thu-3',
-    batch: '25B',
-    subSection: 'All',
     courseCode: 'DS',
     courseName: 'Data Structures (Theory)',
     type: 'Theory',
@@ -349,32 +451,18 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     teacherInitial: 'MH',
     room: 'Room 702',
     day: 'Thursday',
-    startTime: '11:30',
-    endTime: '13:00',
+    startTime: '10:00',
+    endTime: '11:30',
   },
 
-  // ==========================================
+  // =========================================================================
   // BATCH 25C
-  // ==========================================
+  // Schedule: Saturday, Monday, Tuesday, Wednesday
+  // =========================================================================
 
   // Saturday
   {
     id: '25C-sat-1',
-    batch: '25C',
-    subSection: 'All',
-    courseCode: 'DS Lab',
-    courseName: 'Data Structures Lab',
-    type: 'Lab',
-    teacherName: 'Mr. Israfil',
-    teacherInitial: 'IS',
-    room: '615 Lab',
-    day: 'Saturday',
-    startTime: '11:30',
-    endTime: '14:30',
-    notes: 'Extended hands-on lab (11:30 AM – 02:30 PM)',
-  },
-  {
-    id: '25C-sat-2',
     batch: '25C',
     subSection: 'All',
     courseCode: 'CAO',
@@ -382,10 +470,40 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     type: 'Theory',
     teacherName: 'Md. Safayat Hossain',
     teacherInitial: 'MSH',
-    room: 'Room 702',
+    room: 'Room 704',
+    day: 'Saturday',
+    startTime: '11:30',
+    endTime: '13:00',
+  },
+  {
+    id: '25C-sat-2-sec1',
+    batch: '25C',
+    subSection: '1',
+    courseCode: 'DS Lab',
+    courseName: 'Data Structures Lab (25C1)',
+    type: 'Lab',
+    teacherName: 'Mr. Israfil',
+    teacherInitial: 'IS',
+    room: '615 Lab',
+    day: 'Saturday',
+    startTime: '13:00',
+    endTime: '14:30',
+    notes: 'Batch 25C Section 1 lab slot',
+  },
+  {
+    id: '25C-sat-3-sec2',
+    batch: '25C',
+    subSection: '2',
+    courseCode: 'DS Lab',
+    courseName: 'Data Structures Lab (25C2)',
+    type: 'Lab',
+    teacherName: 'Mr. Israfil',
+    teacherInitial: 'IS',
+    room: '615 Lab',
     day: 'Saturday',
     startTime: '14:30',
     endTime: '16:00',
+    notes: 'Batch 25C Section 2 lab slot',
   },
 
   // Monday
@@ -396,8 +514,8 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     courseCode: 'Math I',
     courseName: 'Mathematics I',
     type: 'Theory',
-    teacherName: 'To Be Assigned',
-    teacherInitial: 'TBA',
+    teacherName: 'Mohammad Mahmud Hasan',
+    teacherInitial: 'MMDH',
     room: 'Room 704',
     day: 'Monday',
     startTime: '08:30',
@@ -407,11 +525,11 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     id: '25C-mon-2',
     batch: '25C',
     subSection: 'All',
-    courseCode: 'CAO',
-    courseName: 'Computer Architecture & Organization',
+    courseCode: 'DS',
+    courseName: 'Data Structures (Theory)',
     type: 'Theory',
-    teacherName: 'Md. Safayat Hossain',
-    teacherInitial: 'MSH',
+    teacherName: 'Mr. Israfil',
+    teacherInitial: 'IS',
     room: 'Room 702',
     day: 'Monday',
     startTime: '11:30',
@@ -421,11 +539,11 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     id: '25C-mon-3',
     batch: '25C',
     subSection: 'All',
-    courseCode: 'DS',
-    courseName: 'Data Structures (Theory)',
+    courseCode: 'CAO',
+    courseName: 'Computer Architecture & Organization',
     type: 'Theory',
-    teacherName: 'Mr. Israfil',
-    teacherInitial: 'IS',
+    teacherName: 'Md. Safayat Hossain',
+    teacherInitial: 'MSH',
     room: 'Room 703',
     day: 'Monday',
     startTime: '13:00',
@@ -484,8 +602,8 @@ export const INITIAL_SCHEDULE: ClassSession[] = [
     courseCode: 'Math I',
     courseName: 'Mathematics I',
     type: 'Theory',
-    teacherName: 'To Be Assigned',
-    teacherInitial: 'TBA',
+    teacherName: 'Mohammad Mahmud Hasan',
+    teacherInitial: 'MMDH',
     room: 'Room 703',
     day: 'Wednesday',
     startTime: '16:00',

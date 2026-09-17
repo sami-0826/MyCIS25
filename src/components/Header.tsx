@@ -65,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
             </div>
             <p className={`text-xs ${theme.mutedAccentText} leading-tight transition-colors`}>
-              Class Routine
+              Fall 2026 &bull; Version 02
             </p>
           </div>
         </div>
