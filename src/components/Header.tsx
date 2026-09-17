@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GraduationCap, Sun, Moon, Bookmark, RotateCcw, Bell, BellOff, BookOpen } from 'lucide-react';
+import { GraduationCap, Sun, Moon, RotateCcw, Bell, BellOff, BookOpen } from 'lucide-react';
 import { BatchId } from '../types';
 import { getBatchTheme } from '../utils/themeUtils';
 
@@ -52,20 +52,11 @@ export const Header: React.FC<HeaderProps> = ({
             <GraduationCap className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className={`text-base sm:text-lg font-bold tracking-tight ${theme.headingText} leading-tight transition-colors`}>
-                MyCIS 25
-              </h1>
-              <span
-                className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${theme.badgeBg} ${theme.badgeText} border ${theme.badgeBorder} transition-colors inline-flex items-center gap-1`}
-                title={isPinned ? `Batch ${selectedBatch} is your saved "My Batch" default` : `Batch ${selectedBatch}`}
-              >
-                {isPinned && <Bookmark className="w-2.5 h-2.5 fill-current text-amber-500" />}
-                <span>{isPinned ? `My Batch: ${selectedBatch}` : selectedBatch}</span>
-              </span>
-            </div>
+            <h1 className={`text-base sm:text-lg font-bold tracking-tight ${theme.headingText} leading-tight transition-colors`}>
+              MyCIS 25
+            </h1>
             <p className={`text-xs ${theme.mutedAccentText} leading-tight transition-colors`}>
-              Fall 2026 &bull; Version 02
+              Fall 2026
             </p>
           </div>
         </div>
