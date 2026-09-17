@@ -70,8 +70,19 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Right: Actions (Guide, Notifications, Reload & Theme Toggle) */}
+        {/* Right: Actions (Guide, Notifications, Reload, Theme Toggle & Install App) */}
         <div className="flex items-center gap-2">
+          {/* Custom PWA Install App Button */}
+          <button
+            id="installBtn"
+            style={{ display: 'none' }}
+            title="Install MyCIS 25"
+            aria-label="Install App"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-200 border border-slate-200 dark:border-zinc-800 transition-colors cursor-pointer shadow-xs"
+          >
+            📲 Install App
+          </button>
+
           {/* Feature Guide & Best Ways to Use Button */}
           <button
             id="btn-header-guide"

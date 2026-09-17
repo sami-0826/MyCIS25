@@ -28,6 +28,52 @@
         });
       }
     </script>
+    <script>
+      let deferredPrompt;
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const installBtn = document.getElementById('installBtn');
+        if (installBtn) {
+          installBtn.style.display = 'inline-flex';
+        }
+      });
+
+      const installBtn = document.getElementById('installBtn');
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const choiceResult = await deferredPrompt.userChoice;
+            console.log('User choice:', choiceResult);
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+          }
+        });
+      }
+
+      // Ensure click handling functions seamlessly when the header is rendered dynamically
+      document.addEventListener('click', async (e) => {
+        const btn = e.target && e.target.closest ? e.target.closest('#installBtn') : null;
+        if (btn && deferredPrompt) {
+          deferredPrompt.prompt();
+          const choiceResult = await deferredPrompt.userChoice;
+          console.log('User choice:', choiceResult);
+          deferredPrompt = null;
+          btn.style.display = 'none';
+        }
+      });
+
+      // Show button if beforeinstallprompt fired prior to the element mounting in the DOM
+      const observer = new MutationObserver(() => {
+        const btn = document.getElementById('installBtn');
+        if (btn && deferredPrompt && btn.style.display === 'none') {
+          btn.style.display = 'inline-flex';
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    </script>
   </body>
 </html>
 
